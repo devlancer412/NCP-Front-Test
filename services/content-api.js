@@ -23,7 +23,7 @@ export const getPersonalContentList = async (address) => {
   }
 
   try {
-    const result = await axios.get(`/api/distributor/${address}`);
+    const result = await axios.get(`/api/distributor/${address}/`);
 
     return { success: true, data: result.data };
   } catch (err) {
@@ -41,7 +41,7 @@ export const getContentData = async (contentId) => {
   }
 
   try {
-    const { data } = await axios.get(`/api/content/${contentId}`);
+    const { data } = await axios.get(`/api/content/${contentId}/`);
 
     return { success: true, data };
   } catch (err) {

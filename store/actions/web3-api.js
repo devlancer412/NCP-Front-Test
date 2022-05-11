@@ -242,7 +242,7 @@ export const unLockPrivate = async (address, contentId) => {
 
   try {
     const result = await axios.get(
-      `/api/content/unlock/${tokenId}?signature=${signature}&timestamp=${timestamp}`
+      `/api/content/unlock/${tokenId}/?signature=${signature}&timestamp=${timestamp}`
     );
 
     return {

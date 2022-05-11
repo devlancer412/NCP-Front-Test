@@ -78,7 +78,7 @@ export const removeBlob = (index) => (dispatch) => {
 export const getNewContentId = () => async (dispatch) => {
   dispatch(setLoading(true));
   try {
-    const result = await axios.get("/api/content/upload/new");
+    const result = await axios.get("/api/content/upload/new/");
 
     dispatch(setContentId(result.data.content_id));
   } catch (err) {
@@ -104,7 +104,7 @@ const uploadContentBlob = async (contentId, blob) => {
   formData.append("file", file);
 
   return await axios.post(
-    `/api/content/upload/${contentId}?name=${blob.name}&private=${blob.protected}&type=${blob.type}&replace=false`,
+    `/api/content/upload/${contentId}/?name=${blob.name}&private=${blob.protected}&type=${blob.type}&replace=false`,
     formData,
     {
       headers: {
@@ -127,7 +127,7 @@ export const uploadContentBlobs =
         .filter((ele) => ele.name != "banner" && ele.name != "trailer")
         .map((ele) => ele.name);
 
-      await axios.post(`/api/content/upload/${contentId}/meta`, {
+      await axios.post(`/api/content/upload/${contentId}/meta/`, {
         name,
         description,
         banner: "banner-image",
@@ -136,7 +136,7 @@ export const uploadContentBlobs =
       });
 
       const result = await axios.post(
-        `/api/content/upload/${contentId}/finish?owner=${address}`
+        `/api/content/upload/${contentId}/finish/?owner=${address}`
       );
 
       console.log("Signature was got:", result.data.signature);
@@ -148,7 +148,7 @@ export const uploadContentBlobs =
       if (!newContentResult) {
         dispatch(setError("Failed content creation"));
 
-        await axios.delete(`/api/content/upload/${contentId}?name=${name}`);
+        await axios.delete(`/api/content/upload/${contentId}/?name=${name}`);
 
         dispatch(setLoading(false));
         return;
@@ -159,7 +159,7 @@ export const uploadContentBlobs =
     } catch (err) {
       console.log(err);
 
-      await axios.delete(`/api/content/upload/${contentId}?${name}`);
+      await axios.delete(`/api/content/upload/${contentId}/?${name}`);
 
       if (err && !err.response) {
         dispatch(setError("Can't reache to server"));
