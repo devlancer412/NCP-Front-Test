@@ -2,7 +2,7 @@ import axios from "../utils/http-comon";
 
 export const getContentList = async () => {
   try {
-    const contents = await axios.get("/api/distributor/");
+    const contents = await axios.get("/api/distributor");
 
     return { success: true, data: contents.data };
   } catch (err) {
@@ -23,7 +23,7 @@ export const getPersonalContentList = async (address) => {
   }
 
   try {
-    const result = await axios.get(`/api/distributor/${address}/`);
+    const result = await axios.get(`/api/distributor/${address}`);
 
     return { success: true, data: result.data };
   } catch (err) {
@@ -41,7 +41,7 @@ export const getContentData = async (contentId) => {
   }
 
   try {
-    const { data } = await axios.get(`/api/content/${contentId}/`);
+    const { data } = await axios.get(`/api/content/${contentId}`);
 
     return { success: true, data };
   } catch (err) {
